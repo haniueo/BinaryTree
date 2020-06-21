@@ -1,0 +1,230 @@
+import java.util.*;
+
+ 
+
+class ListNode{
+
+    Character data;
+
+    ListNode next;
+
+    ListNode (Character data){
+
+        this.data = data;
+
+        next = null;
+
+    }
+
+ 
+
+}
+
+ 
+
+class BinaryTreeNode{
+
+    Character data;
+
+    BinaryTreeNode left, right = null;
+
+    BinaryTreeNode(Character data){
+
+        this.data = data;
+
+        left = right = null;
+
+    }
+
+}
+
+ 
+
+class BinaryTree{
+
+    ListNode head;
+
+    BinaryTreeNode root;
+
+ 
+
+    void push(Character new_data){
+
+        ListNode new_node = new ListNode(new_data);
+
+        new_node.next = head;
+
+        head = new_node;
+
+    }
+
+ 
+
+    BinaryTreeNode convertList2Binary(BinaryTreeNode node){
+
+        Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+
+        if (head == null){
+
+            node = null;
+
+            return null;
+
+        }
+
+ 
+
+        node = new BinaryTreeNode(head.data);
+
+        q.add(node);
+
+        head = head.next;
+
+ 
+
+        while (head != null){
+
+            BinaryTreeNode parent = q.peek();
+
+            BinaryTreeNode pp = q.poll();
+
+            BinaryTreeNode leftChild = null, rightChild = null;
+
+ 
+
+            leftChild = new BinaryTreeNode(head.data);
+
+            q.add(leftChild);
+
+            head = head.next;
+
+ 
+
+            if (head != null){
+
+                rightChild = new BinaryTreeNode(head.data);
+
+                q.add(rightChild);
+
+                head = head.next;
+
+            }
+
+ 
+
+            parent.left = leftChild;
+
+            parent.right = rightChild;
+
+        }
+
+ 
+
+        return node;
+
+    }
+
+ 
+
+    void inorder(BinaryTreeNode node){
+
+        if (node != null){
+
+            inorder(node.left);
+
+            System.out.print(node.data + " ");
+
+            inorder(node.right);
+
+        }
+
+    }
+
+ 
+
+    void preorder(BinaryTreeNode node){
+
+        if (node != null){
+
+            System.out.print(node.data + " ");
+
+            preorder(node.left);
+
+            preorder(node.right);
+
+        }
+
+    }
+
+ 
+
+    void postorder(BinaryTreeNode node){
+
+        if (node != null){
+
+            postorder(node.left);
+
+            postorder(node.right);
+
+            System.out.print(node.data + " ");
+
+        }
+
+    }
+
+ 
+
+    public static void main(String[] args) {
+
+        BinaryTree o = new BinaryTree();
+
+ 
+
+        o.push('O');
+
+        o.push('C');
+
+        o.push('V');
+
+        o.push('B');
+
+        o.push('I');
+
+        o.push('R');
+
+        o.push('K');
+
+        o.push('A');
+
+        o.push('X');
+
+//        o.push(5);
+
+//        o.push(3);
+
+//        o.push(2);
+
+//        o.push(30);
+
+//        o.push(10);
+
+ 
+
+        BinaryTreeNode node = o.convertList2Binary(o.root);
+
+        System.out.print("In-Order: ");
+
+        o.inorder(node);
+
+        System.out.print("\nPost-Order: ");
+
+        o.postorder(node);
+
+        System.out.print("\nPre-Order: ");
+
+        o.preorder(node);
+
+    }
+
+}
+
